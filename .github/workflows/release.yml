@@ -9,21 +9,19 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
       - name: ruby 3.2
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2
 
+      - name: checkout
+        uses: actions/checkout@v2
+
       - name: setup dependencies
-        run: |
-          gem install xot
-          rake setup:dependencies
+        run: ruby -L.github/workflows -rutils -e 'setup_dependencies'
 
       - name: test
-        run: rake clobber test
+        run: rake test
 
       - name: upload to rubygems
         env:
